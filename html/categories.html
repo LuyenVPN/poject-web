@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav">
+        <div class="logo">
+          <a href="../index.html">VocabApp</a>
+        </div>
+        <div class="titlenavbar" style="display: flex">
+          <a href="./dashboard.html">Dashboard</a>
+          <a href="./categories.html" style="color: blue">Categories</a>
+          <a href="./vocabulary.html">Vocabulary</a>
+          <a href="./flashcard.html">Flashcards</a>
+          <a href="./quiz.html">Quiz</a>
+        </div>
+      </div>
+      <div class="exit" style="display: none" id="exit">
+        <p>Hi, <span class="name"></span></p>
+        <button>Logout</button>
+      </div>
+    </nav>
+    <main>
+      <div class="categories-container">
+        <div class="title-categories">
+          <h1>Vocabulary Categories</h1>
+          <button onclick="openAddCategoryModal()" class="add-category-button">
+            Add New Category
+          </button>
+        </div>
+        <input type="text" id="search" placeholder="Search categories..." />
+        <table class="categories-table">
+          <thead>
+            <tr>
+              <th>NAME</th>
+              <th>DESCRIPTION</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody id="list-category">
+        
+          </tbody>
+        </table>
+      </div>
+    </main>
+    <footer>
+      <p>© 2024 LuyenDV. All rights reserved.</p>
+    </footer>
+    <div class="modal" id="exitModal">
+      <div class="modal-content">
+        <h3>Bạn có chắc chắn muốn thoát?</h3>
+        <div class="modal-buttons">
+          <button class="yes-button" onclick="confirmExit()">Có</button>
+          <button class="no-button" onclick="closeExitModal()">Không</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal thêm danh mục -->
+    <div class="modal" id="addCategoryModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Add New Category</h3>
+          <span class="close-button" onclick="closeAddCategoryModal()">×</span>
+        </div>
+        <div class="modal-body">
+          <label for="newCategoryName">Name</label>
+          <input
+            type="text"
+            id="newCategoryName"
+            placeholder="Nhập tên danh mục"
+          />
+          <label for="newCategoryDescription">Description</label>
+          <textarea
+            id="newCategoryDescription"
+            placeholder="Nhập mô tả danh mục"
+            rows="3"
+          ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="cancel-button" onclick="closeAddCategoryModal()">
+            Cancel
+          </button>
+          <button class="save-button" onclick="saveNewCategory()">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal sửa danh mục -->
+    <div class="modal" id="editCategoryModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Edit Category</h3>
+          <span class="close-button" onclick="closeEditCategoryModal()">×</span>
+        </div>
+        <div class="modal-body">
+          <label for="editCategoryName">Name</label>
+          <input
+            type="text"
+            id="editCategoryName"
+            placeholder="Nhập tên danh mục muốn sửa"
+          />
+          <label for="editCategoryDescription">Description</label>
+          <textarea
+            id="editCategoryDescription"
+            placeholder="Nhập lại mô tả danh mục muốn sửa"
+            rows="3"
+          ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="cancel-button" onclick="closeEditCategoryModal()">
+            Cancel
+          </button>
+          <button class="save-button" onclick="saveEditedCategory()">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal xóa danh mục -->
+    <div class="modal" id="deleteCategoryModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Delete Category</h3>
+          <span class="close-button" onclick="closeDeleteCategoryModal()"
+            >×</span
+          >
+        </div>
+        <div class="modal-body">
+          <p>Bạn có chắc chắn muốn xóa danh mục không?</p>
+        </div>
+        <div class="modal-footer">
+          <button class="cancel-button" onclick="closeDeleteCategoryModal()">
+            Cancel
+          </button>
+          <button class="delete-button" onclick="confirmDeleteCategory()">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="../js/app.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/categories.js"></script>
+    <script src="../js/flashcard.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/vocabulary.js"></script>
+  </body>
+</html>

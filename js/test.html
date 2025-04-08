@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .modal-content {
+            width: 100%;
+            margin: 0 200px;
+        }
+    </style>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <!-- Modal thêm danh mục -->
+<!-- <div class="modal" id="addCategoryModal"> -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add New Category</h3>
+        <span class="close-button" onclick="closeAddCategoryModal()">×</span>
+      </div>
+      <div class="modal-body">
+        <label for="newCategoryName">Name</label>
+        <input type="text" id="newCategoryName" placeholder="Nhập tên danh mục" />
+        <label for="newCategoryDescription">Description</label>
+        <textarea id="newCategoryDescription" placeholder="Nhập mô tả danh mục" rows="3"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="cancel-button" onclick="closeAddCategoryModal()">Cancel</button>
+        <button class="save-button" onclick="saveNewCategory()">Save</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal sửa danh mục -->
+  <!-- <div class="modal" id="editCategoryModal"> -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Edit Category</h3>
+        <span class="close-button" onclick="closeEditCategoryModal()">×</span>
+      </div>
+      <div class="modal-body">
+        <label for="editCategoryName">Name</label>
+        <input type="text" id="editCategoryName" placeholder="Enter category name" />
+        <label for="editCategoryDescription">Description</label>
+        <textarea id="editCategoryDescription" placeholder="Enter category description" rows="3"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="cancel-button" onclick="closeEditCategoryModal()">Cancel</button>
+        <button class="save-button" onclick="saveEditedCategory()">Save</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal xóa danh mục -->
+  <!-- <div class="modal" id="deleteCategoryModal"> -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Delete Category</h3>
+        <span class="close-button" onclick="closeDeleteCategoryModal()">×</span>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this category?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="cancel-button" onclick="closeDeleteCategoryModal()">Cancel</button>
+        <button class="delete-button" onclick="confirmDeleteCategory()">Delete</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

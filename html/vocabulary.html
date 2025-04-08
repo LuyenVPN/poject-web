@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav">
+        <div class="logo">
+          <a href="../index.html">VocabApp</a>
+        </div>
+        <div class="titlenavbar" style="display: flex">
+          <a href="./dashboard.html">Dashboard</a>
+          <a href="./categories.html">Categories</a>
+          <a href="./vocabulary.html" style="color: blue">Vocabulary</a>
+          <a href="./flashcard.html">Flashcards</a>
+          <a href="./quiz.html">Quiz</a>
+        </div>
+      </div>
+      <div class="exit" style="display: none" id="exit">
+        <p>Hi, <span class="name"></span></p>
+        <button>Logout</button>
+      </div>
+    </nav>
+    <main>
+      <div class="vocabulary-container">
+        <div class="title-vocabulary">
+          <h1>Vocabulary Words</h1>
+          <button class="add-word-button" onclick="openAddWordModal()">
+            Add New Word
+          </button>
+        </div>
+        <select id="category-select">
+          <option value="all">All Categories</option>
+          
+        </select>
+        <input
+          type="text"
+          id="search-vocabulary"
+          placeholder="Search vocabulary..."
+        />
+        <table class="vocabulary-table">
+          <thead>
+            <tr>
+              <th>WORD</th>
+              <th>MEANING</th>
+              <th>CATEGORY</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody id="list-vocabulary">
+          
+          </tbody>
+        </table>
+        <div id="pagination-controls" class="pagination-controls"></div>
+      </div>
+    </main>
+    <footer>
+      <p>© 2024 LuyenDV. All rights reserved.</p>
+    </footer>
+    <div class="modal" id="exitModal">
+      <div class="modal-content">
+        <h3>Bạn có chắc chắn muốn thoát?</h3>
+        <div class="modal-buttons">
+          <button class="yes-button" onclick="confirmExit()">Có</button>
+          <button class="no-button" onclick="closeExitModal()">Không</button>
+        </div>
+      </div>
+    </div>
+    <!-- Modal thêm từ mới -->
+    <div class="modal" class="modal-voca" id="addWordModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Add New Word</h3>
+          <span class="close-button" onclick="closeAddWordModal()">×</span>
+        </div>
+        <div class="modal-body">
+          <label for="word" style="text-align: start">Word</label>
+          <input type="text" id="word" placeholder="Nhập từ vựng" />
+          <label for="meaning" style="text-align: start">Meaning</label>
+          <textarea id="meaning" placeholder="Nhập nghĩa" rows="3" cols="50"></textarea>
+          <label for="category" style="text-align: start">Category</label>
+          <select id="category">
+            <option value="">Select Category</option>
+            <!-- Các danh mục sẽ được thêm động bằng JavaScript -->
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button class="cancel-button" onclick="closeAddWordModal()">
+            Cancel
+          </button>
+          <button class="save-button" onclick="saveWord()">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal xóa từ -->
+    <div class="modal" id="deleteWordModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Delete Word</h3>
+          <span class="close-button" onclick="closeDeleteWordModal()">×</span>
+        </div>
+        <div class="modal-body">
+          <p>Bạn có chắc chắn muốn xóa từ này không?</p>
+        </div>
+        <div class="modal-footer">
+          <button class="cancel-button" onclick="closeDeleteWordModal()">
+            Cancel
+          </button>
+          <button class="delete-button" onclick="confirmDeleteWord()">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal sửa từ -->
+    <div class="modal" id="editWordModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Edit Word</h3>
+          <span class="close-button" onclick="closeEditWordModal()">×</span>
+        </div>
+        <div class="modal-body">
+          <label for="editWord" style="text-align: start">Word</label>
+          <input
+            type="text"
+            id="editWord"
+            placeholder="Nhập từ vựng muốn sửa"
+          />
+          <label for="editMeaning" style="text-align: start">Meaning</label>
+          <textarea
+            id="editMeaning"
+            placeholder="Nhập nghĩa mới"
+            rows="3"
+            cols="50"
+          ></textarea>
+          <label for="editCategory" style="text-align: start">Category</label>
+          <select id="editCategory">
+            <option value="">Select Category</option>
+            <!-- Các danh mục sẽ được thêm động bằng JavaScript -->
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button class="cancel-button" onclick="closeEditWordModal()">
+            Cancel
+          </button>
+          <button class="save-button" onclick="saveEditedWord()">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/categories.js"></script>
+    <script src="../js/flashcard.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/vocabulary.js"></script>
+  </body>
+</html>
