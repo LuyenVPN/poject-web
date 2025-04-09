@@ -25,25 +25,37 @@
         <button>Logout</button>
       </div>
     </nav>
-    <main>
+    <main style="padding: 0; background-color: #f3f4f6;" >
       <div class="flashcard-container">
-        <h1>Flashcard Learning</h1>
+        <h1 style="text-align: left; background-color: #f8f9fa;">Flashcard Learning</h1>
         <select id="category-select">
           <option value="all">All Categories</option>
-          <!-- Categories will be dynamically added here -->
         </select>
-        <div class="flashcard">
-          <p id="flashcard-content">No words available</p>
+        <div class="flashcard-wrapper" onclick="flipCard()">
+          <div class="flashcard">
+            <div class="flashcard-inner">
+              <div class="flashcard-front">
+                <p id="flashcard-content" style="background-color: white">No words available</p>
+              </div>
+              <div class="flashcard-back">
+                <p id="flashcard-meaning"></p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-controls">
+        <div class="flashcard-controls" style="background-color: #f8f9fa;">
           <button id="prev-button" class="control-button">Previous</button>
-          <button id="mark-learned-button" class="control-button">Mark as Learned</button>
+          <button id="mark-learned-button" class="mark-learned-button">Mark as Learned</button>
           <button id="next-button" class="control-button">Next</button>
         </div>
-        <div class="progress">
-          <p>Progress</p>
-          <p id="progress-count">0/0</p>
+        <div class="progress" style="background-color: #f8f9fa;">
+          <p style="background-color: #f8f9fa;" >Progress</p>
+          <p style="background-color: #f8f9fa;" id="progress-count">0/0</p>
         </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <h2 class="word-list-title" style="background-color: #f8f9fa; text-align: left;">Word List</h2>
         <table class="word-list">
           <thead>
             <tr>
@@ -53,7 +65,7 @@
             </tr>
           </thead>
           <tbody id="word-list-body">
-            <!-- Words will be dynamically added here -->
+            
           </tbody>
         </table>
       </div>

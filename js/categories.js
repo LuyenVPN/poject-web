@@ -9,13 +9,8 @@ window.categories = categories;
 
 // Hàm hiển thị danh sách danh mục
 function displayCategories() {
-  // Lấy phần tbody của bảng
   const tbody = document.getElementById("list-category");
-  
-  // Xóa hết nội dung cũ
   tbody.innerHTML = "";
-
-  // Duyệt qua từng danh mục để hiển thị
   categories.forEach((category, index) => {
     const row = document.createElement("tr");
     row.innerHTML = `

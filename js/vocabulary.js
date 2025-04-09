@@ -33,8 +33,9 @@ categoriesList();
 let vocabularyList = [];
 let indexEddit = null;
 let indexDelete = null;
-// let currentPage = 1;
-// const itemsPerPage = 5;
+// Thêm biến cho phân trang
+let currentPage = 1; // Trang hiện tại
+let itemsPerPage = 5; // Số từ vựng hiển thị trên mỗi trang
 // Lưu danh sách từ vựng vào localStorage
 function saveLocalStorage() {
   localStorage.setItem("vocabularyList", JSON.stringify(vocabularyList));
@@ -68,33 +69,79 @@ function displayVocabulary(list = vocabularyList) {
     tableBody.appendChild(row);
   });
 }
+
+
+// // Hiển thị danh sách từ vựng
 // function displayVocabulary(list = vocabularyList) {
 //   const tableBody = document.getElementById("list-vocabulary");
 //   tableBody.innerHTML = "";
-
-//   // Lấy danh sách từ vựng theo trang
-//   const paginatedList = paginate(list, itemsPerPage, currentPage);
-
-//   // Hiển thị danh sách từ vựng
+//   // Tính vị trí bắt đầu và kết thúc của trang hiện tại
+//   const start = (currentPage - 1) * itemsPerPage; // Vị trí bắt đầu
+//   const end = start + itemsPerPage; // Vị trí kết thúc
+//   // Danh sách từ vựng của trang hiện tại
+//   const paginatedList = list.slice(start, end);
 //   paginatedList.forEach((item, index) => {
-//     const row = document.createElement("tr");
-//     row.innerHTML = `
-//       <td>${item.word}</td>
-//       <td>${item.meaning}</td>
-//       <td>${item.category}</td>
-//       <td>
-//         <button onclick="openEditWordModal(${index})" class="edit-btn">Edit</button>
-//         <button onclick="openDeleteWordModal(${index})" class="delete-btn">Delete</button>
-//       </td>
-//     `;
-//     tableBody.appendChild(row);
+//       const row = document.createElement("tr");
+//       row.innerHTML = `
+//           <td>${item.word}</td>
+//           <td>${item.meaning}</td>
+//           <td>${item.category}</td>
+//           <td>
+//               <button onclick="openEditWordModal(${start + index})" class="edit-btn">Edit</button>
+//               <button onclick="openDeleteWordModal(${start + index})" class="delete-btn">Delete</button>
+//           </td>
+//       `;
+//       tableBody.appendChild(row);
 //   });
+//   showPagination(list.length);
+// }
+// Chức năng phân trang
+// function showPagination(totalItems) {
+//   const paginationDiv = document.getElementById("pagination-controls");
+//   paginationDiv.innerHTML = "";
+//   if (totalItems === 0) {
+//     paginationDiv.style.display = "none";
+//     return;
+//   }
+//   paginationDiv.style.display = "flex";
+//   // Tính tổng số trang (làm tròn lên)
+//   const totalPages = Math.ceil(totalItems / itemsPerPage);
+//   let buttonsHtml = "";
+  
+//   // Nút Trang trước
+//   if (currentPage > 1) {
+//     // Nếu không phải trang đầu, cho phép click
+//     buttonsHtml += `<button class="pagination-button" onclick="goToPage(${currentPage - 1})">Trang trước</button>`;
+//   } else {
+//     // Nếu là trang đầu, không cho click
+//     buttonsHtml += `<button class="pagination-button" disabled>Trang trước</button>`;
+//   }
+//   // Các nút số trang
+//   for (let i = 1; i <= totalPages; i++) {
+//     if (i === currentPage) {
+//       // Trang hiện tại sẽ có màu khác
+//       buttonsHtml += `<button class="pagination-button active">${i}</button>`;
+//     } else {
+//       // Các trang khác có thể click
+//       buttonsHtml += `<button class="pagination-button" onclick="goToPage(${i})">${i}</button>`;
+//     }
+//   }
+//   // Nút Trang sau
+//   if (currentPage < totalPages) {
+//     // Nếu không phải trang cuối, cho phép click
+//     buttonsHtml += `<button class="pagination-button" onclick="goToPage(${currentPage + 1})">Trang sau</button>`;
+//   } else {
+//     // Nếu là trang cuối, không cho click
+//     buttonsHtml += `<button class="pagination-button" disabled>Trang sau</button>`;
+//   }
+//   paginationDiv.innerHTML = buttonsHtml;
+// }
 
-//   // Cập nhật các nút phân trang
-//   createPaginationControls(list, itemsPerPage, currentPage, (page) => {
-//     currentPage = page;
-//     displayVocabulary(list);
-//   });
+// // Hàm chuyển trang đơn giản
+// function goToPage(page) {
+//   // Đổi trang hiện tại
+//   currentPage = page;
+//   displayVocabulary();
 // }
 
 // Thêm từ mới
@@ -182,8 +229,24 @@ function searchVocabulary() {
     item.meaning.toLowerCase().includes(searchTerm) ||
     item.category.toLowerCase().includes(searchTerm)
   );
-  // currentPage = 1; // Đặt lại trang hiện tại về 1
   displayVocabulary(searchList);
+}
+// tìm kiếm theo danh mục
+function filterByCategory() {
+  const categorySelect = document.getElementById("category-select");
+  const selectedCategory = categorySelect.value;
+  let result = [];
+  if (selectedCategory === "all") {
+      result = vocabularyList;
+  } 
+  else {
+      for (let i = 0; i < vocabularyList.length; i++) {
+          if (vocabularyList[i].category === selectedCategory) {
+              result.push(vocabularyList[i]);
+          }
+      }
+  }
+  displayVocabulary(result);
 }
 
 
@@ -215,37 +278,3 @@ document.addEventListener("DOMContentLoaded", () => {
   displayVocabulary();
   document.getElementById("search-vocabulary").addEventListener("input", searchVocabulary);
 });
-// function paginate(data, itemsPerPage, currentPage) {
-//   const startIndex = (currentPage - 1) * itemsPerPage;
-//   const endIndex = startIndex + itemsPerPage;
-//   return data.slice(startIndex, endIndex);
-// }
-// function createPaginationControls(data, itemsPerPage, currentPage, onPageChange) {
-//   const paginationContainer = document.getElementById("pagination-controls");
-//   paginationContainer.innerHTML = "";
-
-//   const totalPages = Math.ceil(data.length / itemsPerPage);
-
-//   // Nút Previous
-//   const prevButton = document.createElement("button");
-//   prevButton.textContent = "Previous";
-//   prevButton.disabled = currentPage === 1;
-//   prevButton.onclick = () => onPageChange(currentPage - 1);
-//   paginationContainer.appendChild(prevButton);
-
-//   // Các nút số trang
-//   for (let i = 1; i <= totalPages; i++) {
-//     const pageButton = document.createElement("button");
-//     pageButton.textContent = i;
-//     pageButton.className = currentPage === i ? "active" : "";
-//     pageButton.onclick = () => onPageChange(i);
-//     paginationContainer.appendChild(pageButton);
-//   }
-
-//   // Nút Next
-//   const nextButton = document.createElement("button");
-//   nextButton.textContent = "Next";
-//   nextButton.disabled = currentPage === totalPages;
-//   nextButton.onclick = () => onPageChange(currentPage + 1);
-//   paginationContainer.appendChild(nextButton);
-// }
