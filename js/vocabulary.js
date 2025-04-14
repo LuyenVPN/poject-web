@@ -33,9 +33,6 @@ categoriesList();
 let vocabularyList = [];
 let indexEddit = null;
 let indexDelete = null;
-// Thêm biến cho phân trang
-let currentPage = 1; // Trang hiện tại
-let itemsPerPage = 5; // Số từ vựng hiển thị trên mỗi trang
 // Lưu danh sách từ vựng vào localStorage
 function saveLocalStorage() {
   localStorage.setItem("vocabularyList", JSON.stringify(vocabularyList));
@@ -46,10 +43,9 @@ function loadLocalStorage() {
   const storyList = localStorage.getItem("vocabularyList");
   if (storyList) {
     vocabularyList = JSON.parse(storyList);
-   
   }
 }
-
+window.vocabularyList = vocabularyList;
 // Hiển thị danh sách từ vựng
 function displayVocabulary(list = vocabularyList) {
   const tableBody = document.getElementById("list-vocabulary");
@@ -69,87 +65,12 @@ function displayVocabulary(list = vocabularyList) {
     tableBody.appendChild(row);
   });
 }
-
-
-// // Hiển thị danh sách từ vựng
-// function displayVocabulary(list = vocabularyList) {
-//   const tableBody = document.getElementById("list-vocabulary");
-//   tableBody.innerHTML = "";
-//   // Tính vị trí bắt đầu và kết thúc của trang hiện tại
-//   const start = (currentPage - 1) * itemsPerPage; // Vị trí bắt đầu
-//   const end = start + itemsPerPage; // Vị trí kết thúc
-//   // Danh sách từ vựng của trang hiện tại
-//   const paginatedList = list.slice(start, end);
-//   paginatedList.forEach((item, index) => {
-//       const row = document.createElement("tr");
-//       row.innerHTML = `
-//           <td>${item.word}</td>
-//           <td>${item.meaning}</td>
-//           <td>${item.category}</td>
-//           <td>
-//               <button onclick="openEditWordModal(${start + index})" class="edit-btn">Edit</button>
-//               <button onclick="openDeleteWordModal(${start + index})" class="delete-btn">Delete</button>
-//           </td>
-//       `;
-//       tableBody.appendChild(row);
-//   });
-//   showPagination(list.length);
-// }
-// Chức năng phân trang
-// function showPagination(totalItems) {
-//   const paginationDiv = document.getElementById("pagination-controls");
-//   paginationDiv.innerHTML = "";
-//   if (totalItems === 0) {
-//     paginationDiv.style.display = "none";
-//     return;
-//   }
-//   paginationDiv.style.display = "flex";
-//   // Tính tổng số trang (làm tròn lên)
-//   const totalPages = Math.ceil(totalItems / itemsPerPage);
-//   let buttonsHtml = "";
-  
-//   // Nút Trang trước
-//   if (currentPage > 1) {
-//     // Nếu không phải trang đầu, cho phép click
-//     buttonsHtml += `<button class="pagination-button" onclick="goToPage(${currentPage - 1})">Trang trước</button>`;
-//   } else {
-//     // Nếu là trang đầu, không cho click
-//     buttonsHtml += `<button class="pagination-button" disabled>Trang trước</button>`;
-//   }
-//   // Các nút số trang
-//   for (let i = 1; i <= totalPages; i++) {
-//     if (i === currentPage) {
-//       // Trang hiện tại sẽ có màu khác
-//       buttonsHtml += `<button class="pagination-button active">${i}</button>`;
-//     } else {
-//       // Các trang khác có thể click
-//       buttonsHtml += `<button class="pagination-button" onclick="goToPage(${i})">${i}</button>`;
-//     }
-//   }
-//   // Nút Trang sau
-//   if (currentPage < totalPages) {
-//     // Nếu không phải trang cuối, cho phép click
-//     buttonsHtml += `<button class="pagination-button" onclick="goToPage(${currentPage + 1})">Trang sau</button>`;
-//   } else {
-//     // Nếu là trang cuối, không cho click
-//     buttonsHtml += `<button class="pagination-button" disabled>Trang sau</button>`;
-//   }
-//   paginationDiv.innerHTML = buttonsHtml;
-// }
-
-// // Hàm chuyển trang đơn giản
-// function goToPage(page) {
-//   // Đổi trang hiện tại
-//   currentPage = page;
-//   displayVocabulary();
-// }
-
 // Thêm từ mới
 function saveWord() {
   const word = document.getElementById("word").value.trim();
   const meaning = document.getElementById("meaning").value.trim();
   const category = document.getElementById("category").value;
-  if ( meaning.includes("z") || meaning.includes("Z") ) {
+  if (meaning.includes("z") || meaning.includes("Z")) {
     alert("Lỗi!");
     return;
   }
@@ -157,12 +78,6 @@ function saveWord() {
     alert("Vui lòng điền đầy đủ thông tin!");
     return;
   }
-  // for (let i = 0; i < vocabularyList.length; i++) {
-  //   if (vocabularyList[i].word.toLowerCase() === word.toLowerCase()) {
-  //     alert("Tên từ mới đã tồn tại!");
-  //     return;
-  //   }
-  // } 
   vocabularyList.push({ word, meaning, category });
   // xóa các trường nhập liệu sau khi thêm từ mới
   document.getElementById("word").value = "";
@@ -192,13 +107,7 @@ function saveEditedWord() {
     alert("Vui lòng điền đầy đủ thông tin!");
     return;
   }
-  // for (let i = 0; i < vocabularyList.length; i++) {
-  //   if (i !== editIndex && vocabularyList[i].word.toLowerCase() === word.toLowerCase()) {
-  //     alert("Tên từ mới đã tồn tại!");
-  //     return;
-  //   }
-  // }
-  
+
   vocabularyList[indexEddit] = { word, meaning, category };
   saveLocalStorage();
   displayVocabulary();
@@ -212,8 +121,7 @@ function openDeleteWordModal(index) {
 }
 
 function confirmDeleteWord() {
-  if (indexDelete === null) 
-  return;
+  if (indexDelete === null) return;
 
   vocabularyList.splice(indexDelete, 1);
   saveLocalStorage();
@@ -223,11 +131,14 @@ function confirmDeleteWord() {
 
 // Tìm kiếm từ
 function searchVocabulary() {
-  const searchTerm = document.getElementById("search-vocabulary").value.toLowerCase();
-  const searchList = vocabularyList.filter((item) =>
-    item.word.toLowerCase().includes(searchTerm) ||
-    item.meaning.toLowerCase().includes(searchTerm) ||
-    item.category.toLowerCase().includes(searchTerm)
+  const searchTerm = document
+    .getElementById("search-vocabulary")
+    .value.toLowerCase();
+  const searchList = vocabularyList.filter(
+    (item) =>
+      item.word.toLowerCase().includes(searchTerm) ||
+      item.meaning.toLowerCase().includes(searchTerm) ||
+      item.category.toLowerCase().includes(searchTerm)
   );
   displayVocabulary(searchList);
 }
@@ -237,18 +148,16 @@ function filterByCategory() {
   const selectedCategory = categorySelect.value;
   let result = [];
   if (selectedCategory === "all") {
-      result = vocabularyList;
-  } 
-  else {
-      for (let i = 0; i < vocabularyList.length; i++) {
-          if (vocabularyList[i].category === selectedCategory) {
-              result.push(vocabularyList[i]);
-          }
+    result = vocabularyList;
+  } else {
+    for (let i = 0; i < vocabularyList.length; i++) {
+      if (vocabularyList[i].category === selectedCategory) {
+        result.push(vocabularyList[i]);
       }
+    }
   }
   displayVocabulary(result);
 }
-
 
 // Mở và đóng modal
 function openAddWordModal() {
@@ -276,5 +185,7 @@ function closeDeleteWordModal() {
 document.addEventListener("DOMContentLoaded", () => {
   loadLocalStorage();
   displayVocabulary();
-  document.getElementById("search-vocabulary").addEventListener("input", searchVocabulary);
+  document
+    .getElementById("search-vocabulary")
+    .addEventListener("input", searchVocabulary);
 });

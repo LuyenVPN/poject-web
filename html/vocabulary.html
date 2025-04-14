@@ -35,7 +35,6 @@
         </div>
         <select id="category-select" onchange="filterByCategory()">
           <option value="all">All Categories</option>
-          
         </select>
         <input
           type="text"
@@ -51,11 +50,8 @@
               <th>ACTIONS</th>
             </tr>
           </thead>
-          <tbody id="list-vocabulary">
-          
-          </tbody>
+          <tbody id="list-vocabulary"></tbody>
         </table>
-        <div id="pagination-controls" class="pagination-controls"></div>
       </div>
     </main>
     <footer>
@@ -81,11 +77,15 @@
           <label for="word" style="text-align: start">Word</label>
           <input type="text" id="word" placeholder="Nhập từ vựng" />
           <label for="meaning" style="text-align: start">Meaning</label>
-          <textarea id="meaning" placeholder="Nhập nghĩa" rows="3" cols="50"></textarea>
+          <textarea
+            id="meaning"
+            placeholder="Nhập nghĩa"
+            rows="3"
+            cols="50"
+          ></textarea>
           <label for="category" style="text-align: start">Category</label>
           <select id="category">
             <option value="">Select Category</option>
-            <!-- Các danh mục sẽ được thêm động bằng JavaScript -->
           </select>
         </div>
         <div class="modal-footer">
@@ -142,7 +142,6 @@
           <label for="editCategory" style="text-align: start">Category</label>
           <select id="editCategory">
             <option value="">Select Category</option>
-            <!-- Các danh mục sẽ được thêm động bằng JavaScript -->
           </select>
         </div>
         <div class="modal-footer">

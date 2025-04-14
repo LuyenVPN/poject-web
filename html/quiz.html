@@ -17,7 +17,7 @@
           <a href="./categories.html">Categories</a>
           <a href="./vocabulary.html">Vocabulary</a>
           <a href="./flashcard.html">Flashcards</a>
-          <a href="./quiz.html"  style="color: blue;">Quiz</a>
+          <a href="./quiz.html" style="color: blue">Quiz</a>
         </div>
       </div>
       <div class="exit" style="display: none" id="exit">
@@ -25,7 +25,76 @@
         <button>Logout</button>
       </div>
     </nav>
-    <main></main>
+    <main style="padding: 0px">
+      <div class="quiz-container">
+        <div class="quiz-header">
+          <h1>Vocabulary Quiz</h1>
+          <button class="start-quiz-button" onclick="startQuiz()">
+            Start Quiz
+          </button>
+        </div>
+        <select id="category-quiz">
+          <option value="all">All Categories</option>
+        </select>
+
+        <!-- Quiz -->
+        <div id="quiz" style="display: none">
+          <div class="nav-quiz">
+            <div class="title-quiz">
+              <span>Progress</span>
+              <span id="quizProgress">1/1</span>
+            </div>
+            <!-- Tiến Độ -->
+            <div class="progress-bar-quiz">
+              <div class="progress-fill-quiz" id="progress-fill">1</div>
+            </div>
+          </div>
+
+          <!-- Question -->
+          <div class="question-quiz">
+            <!-- Câu Hỏi -->
+            <h2 class="question" id="questionText">Câu Hỏi Demo ?</h2>
+            <!-- Đáp án -->
+            <div class="answer" style="background-color: white">
+              <div class="reply" id="answer1" onclick="yes()">
+                Câu Trả Lời Thứ Nhất
+              </div>
+              <div class="reply" id="answer2" onclick="no()">
+                Câu Trả Lời Thứ hai
+              </div>
+            </div>
+          </div>
+          <!-- Navigation -->
+          <div class="justify-between">
+            <button class="control-button">Previous</button>
+            <button onclick="nextQuestion()" class="control-button">
+              Next
+            </button>
+          </div>
+        </div>
+
+        <div id="resultQuiz" style="display: none">
+          <h2 class="title-resul">Quiz Results</h2>
+          <div class="finalScore" id="finalScore">NaN%</div>
+          <p class="scoreMessage" id="scoreMessage">
+            Bạn trả lời đúng 0 trong số 0 câu hỏi
+          </p>
+          <button onclick="startQuiz()" class="tryAgain">Try Again</button>
+        </div>
+
+        <h2 class="quiz-history-title">Quiz History</h2>
+        <table class="quiz-history-table">
+          <thead>
+            <tr>
+              <th>DATE</th>
+              <th>CATEGORY</th>
+              <th>SCORE</th>
+            </tr>
+          </thead>
+          <tbody id="quiz-history-body"></tbody>
+        </table>
+      </div>
+    </main>
     <footer>
       <p>© 2024 LuyenDV. All rights reserved.</p>
     </footer>
